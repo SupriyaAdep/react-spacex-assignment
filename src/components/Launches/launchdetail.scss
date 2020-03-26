@@ -1,0 +1,41 @@
+.modalbody__title {
+  font-size: 24px;
+  font-weight: 500;
+}
+.modalbody__subtitle {
+  font-size: 22px;
+  margin: 10px 0;
+  color: var(--blue);
+}
+.modalbody__desc {
+  font-size: 18px;
+  &.--bold {
+    font-weight: 600;
+  }
+}
+.textgreen {
+  color: var(--green);
+}
+.textred {
+  color: var(--red);
+}
+.row {
+  display: flex;
+  align-items: center;
+  .row__title {
+    display: flex;
+    flex: 2;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .row__data {
+    flex: 4;
+    font-size: 16px;
+  }
+}
+.modalbody__link {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

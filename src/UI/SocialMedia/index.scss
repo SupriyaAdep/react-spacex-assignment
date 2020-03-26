@@ -1,0 +1,23 @@
+.social-btn--container {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+}
+.social__img {
+  width: 40px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  border-radius: 20px;
+  padding: 6px;
+  margin-right: 15px;
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    box-shadow: var(--shadowHover);
+  }
+}
+.social__btn--link {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}

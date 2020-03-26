@@ -1,0 +1,96 @@
+import React, { useEffect, useState, useRef } from 'react';
+import useFetchData from '../useFetchData';
+import SearchLaunch from './SearchLaunch';
+import Modal from '../Modal';
+
+const options = {
+  threshold: 1.0
+};
+const limit = 10;
+
+const SpaceXLaunches = () => {
+  const endOfPageRef = useRef();
+  const [{ data, loading, error }, fetchData] = useFetchData([]);
+  const [visible, setModal] = useState(false);
+  const [offset, setOffset] = useState(0);
+
+  const loadData = () => {
+    fetchData(`launches?limit=${limit}&offset=${offset}`);
+  };
+
+  useEffect(() => {
+    loadData();
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (endOfPageRef.current) {
+      observer.observe(endOfPageRef.current);
+    }
+    // // Clean-up the observer if component unmount.
+    return () => observer.disconnect();
+  }, [offset]);
+
+  const handleObserver = ([{ isIntersecting, target }]) => {
+    if (isIntersecting) {
+      //do your actions here
+      // console.log('loading', loading);
+      if (!loading) {
+        setOffset(offset + limit);
+      }
+    }
+  };
+
+  const showDetails = () => {
+    setModal(true);
+  };
+
+  if (error) return <p>Error while fetching</p>;
+  return (
+    <>
+      <SearchLaunch />
+      <div className="list" id="list__container">
+        {data.length !== 0 &&
+          data.map((item, index) => (
+            <div key={index} className="list__box">
+              <h1>Flight Number {item.flight_number}</h1>
+              <p>Name: {item.mission_name} </p>
+              <p>Year: {item.launch_year} </p>
+              <p>Rocket Name: {item.rocket.rocket_name} </p>
+              <p>
+                Nationality: {item.rocket.second_stage.payloads[0].nationality}{' '}
+              </p>
+              <p>
+                Manufacturer:{' '}
+                {item.rocket.second_stage.payloads[0].manufacturer}{' '}
+              </p>
+              <div>
+                <h3>Launch Details</h3>
+                <p>Launch Site - {item.launch_site.site_name_long}</p>
+              </div>
+              <div>
+                Result
+                <p> {item.launch_success}</p>
+                <p>{item.details}</p>
+                <div onClick={() => showDetails()}>Show More</div>
+              </div>
+            </div>
+          ))}
+      </div>
+      {loading ? <p style={{ height: '100px' }}>Data is loading</p> : null}
+      {visible ? (
+        <Modal>
+          <p>Modal is visible</p>
+        </Modal>
+      ) : null}
+      <p
+        id="end-of-page"
+        ref={endOfPageRef}
+        style={{
+          margin: '20px 0',
+          height: '10px',
+          background: '#000'
+        }}
+      ></p>
+    </>
+  );
+};
+
+export default SpaceXLaunches;

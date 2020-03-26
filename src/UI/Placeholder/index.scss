@@ -1,0 +1,38 @@
+.placeholder {
+  position: static;
+  overflow: hidden;
+  animation: placeholderShimmer 2s linear;
+  animation-iteration-count: infinite;
+  background-color: #fff;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.08) 0,
+    rgba(0, 0, 0, 0.15) 15%,
+    rgba(0, 0, 0, 0.08) 30%
+  );
+  background-size: 1200px 100%;
+}
+.placeholder,
+.placeholder .placeholder__line,
+.placeholder .placeholder__line:after,
+.placeholder > :before {
+  background-color: var(--blue);
+}
+.placeholder .placeholder__line {
+  margin-bottom: 0.7em;
+}
+.placeholder .placeholder__line {
+  position: relative;
+  height: 2.85714286em;
+}
+.placeholder .placeholder__line:not(:first-child) {
+  margin-top: 0.7em;
+}
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -1200px 0;
+  }
+  100% {
+    background-position: 1200px 0;
+  }
+}
