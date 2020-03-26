@@ -16,8 +16,8 @@ const SpaceXHistory = () => {
   if (error) return <p>Error while fetching</p>;
   return (
     <div className="timeline" id="timeline">
-      {data.map(list => (
-        <Item list={list} />
+      {data.map((list, index) => (
+        <Item key={index} list={list} />
       ))}
     </div>
   );
